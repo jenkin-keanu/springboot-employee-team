@@ -27,4 +27,13 @@ public class CompanyServiceImpl implements CompanyService{
     public void addCompany(Company company) {
         companies.add(company);
     }
+
+    @Override
+    public Company findCompanyById(int companyId) {
+        for ( Company company: companies) {
+            if (company.getCompanyId() == companyId)
+                return company;
+        }
+        return null;
+    }
 }

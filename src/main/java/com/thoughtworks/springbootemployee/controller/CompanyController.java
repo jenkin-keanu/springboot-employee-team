@@ -26,4 +26,9 @@ public class CompanyController {
     public void addCompany(@RequestBody Company company){
         companyService.addCompany(company);
     }
+
+    @GetMapping("/companies/{companyId}")
+    public Company findCompanyById(@PathVariable int companyId) {
+        return companyService.findCompanyById(companyId);
+    }
 }
