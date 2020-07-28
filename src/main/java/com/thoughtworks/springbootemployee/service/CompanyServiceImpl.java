@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -48,4 +49,13 @@ public class CompanyServiceImpl implements CompanyService{
         }
         return null;
     }
+    @Override
+    public void deleteCompanyById(int companyId){
+        Iterator<Company> companyIterator = companies.iterator();
+        while(companyIterator.hasNext()){
+            Company nextCompany = companyIterator.next();
+            if(nextCompany.getCompanyId() == companyId)nextCompany.setEmployees(null);
+        }
+    }
+
 }
