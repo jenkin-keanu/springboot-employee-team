@@ -23,5 +23,8 @@ public class CompanyServiceImpl implements CompanyService{
         }
         return null;
     }
-
+    @Override
+    public void addCompany(Company company) {
+        companies.add(company);
+    }
 }

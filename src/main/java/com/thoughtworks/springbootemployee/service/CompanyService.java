@@ -7,5 +7,6 @@ import java.util.List;
 public interface CompanyService {
     List<Company> findAllCompanies();
     List<Employee> findAllEmployeesInCompany(int companyId);
+    void addCompany(Company company);
 
 }

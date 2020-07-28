@@ -22,5 +22,8 @@ public class CompanyController {
     public List<Employee> findAllEmployeesInCompany(@PathVariable int companyId){
         return companyService.findAllEmployeesInCompany(companyId);
     }
-
+    @PostMapping("/companies")
+    public void addCompany(@RequestBody Company company){
+        companyService.addCompany(company);
+    }
 }
