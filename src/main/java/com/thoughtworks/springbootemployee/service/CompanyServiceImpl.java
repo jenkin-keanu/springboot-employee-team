@@ -36,4 +36,16 @@ public class CompanyServiceImpl implements CompanyService{
         }
         return null;
     }
+
+    @Override
+    public Company updateCompany(int companyId, Company company) {
+        for(Company item:companies){
+            if (item.getCompanyId() == companyId){
+                item.setCompanyId(company.getCompanyId());
+                item.setEmployees(company.getEmployees());
+                return item;
+            }
+        }
+        return null;
+    }
 }

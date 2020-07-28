@@ -9,4 +9,5 @@ public interface CompanyService {
     List<Employee> findAllEmployeesInCompany(int companyId);
     void addCompany(Company company);
     Company findCompanyById(int companyId);
+    Company updateCompany(int companyId, Company company);
 }
