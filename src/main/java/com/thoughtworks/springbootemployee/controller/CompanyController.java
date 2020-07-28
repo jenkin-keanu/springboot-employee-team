@@ -36,4 +36,5 @@ public class CompanyController {
     public Company updateEmployee(@PathVariable int companyId, @RequestBody Company company) {
         return companyService.updateCompany(companyId, company);
     }
+
 }
