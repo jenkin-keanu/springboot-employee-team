@@ -18,12 +18,14 @@ public class CompanyController {
     public List<Company> findAllCompanies(){
         return companyService.findAllCompanies();
     }
+
     @GetMapping("/companies")
     public List<Company> findCompaniesByCondition(@RequestParam(required = false, defaultValue = "-1") int page,
                                                    @RequestParam(required = false, defaultValue = "-1") int pageSize) {
         if (page != -1) return getPagedCompanies(page, pageSize);
         return companyService.findAllCompanies();
     }
+
     @GetMapping("/companies/{companyId}")
     public List<Employee> findAllEmployeesInCompany(@PathVariable int companyId){
         return companyService.findAllEmployeesInCompany(companyId);
