@@ -1,9 +1,8 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,9 +12,15 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
     private List<Employee> employees = new ArrayList<>();
 
+    private final EmployeeRepository employeeRepository;
+
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
     @Override
     public List<Employee> findAllEmployees() {
-        return employees;
+        return employeeRepository.findAll();
     }
 
     @Override
