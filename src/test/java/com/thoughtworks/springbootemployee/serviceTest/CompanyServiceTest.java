@@ -33,7 +33,7 @@ public class CompanyServiceTest {
      * return all companies
      */
     @Test
-    void should_return_all_companies_when_find_all_companies_given_none(){
+    void should_return_all_companies_when_find_all_companies_given_2_companies(){
         //given
         List<Company> companies = new ArrayList<>();
         for(int i=0;i<2;i++){
