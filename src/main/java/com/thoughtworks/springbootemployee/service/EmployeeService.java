@@ -14,7 +14,7 @@ public interface EmployeeService {
 
     Optional<Employee> findEmployeeById(int employeeId);
 
-    void addEmployee(Employee employee);
+    void addEmployee(EmployeeRequestDto employeeRequestDto);
 
     Employee updateEmployee(int employeeId, EmployeeRequestDto employeeRequestDto);
 

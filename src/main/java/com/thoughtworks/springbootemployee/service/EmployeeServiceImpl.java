@@ -36,7 +36,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findById(employeeId);
     }
     @Override
-    public void addEmployee(Employee employee) {
+    public void addEmployee(EmployeeRequestDto employeeRequestDto) {
+        Company company = companyRepository.findById(employeeRequestDto.getCompany_id()).get();
+        Employee employee = new Employee();
+        employee.setName(employeeRequestDto.getName());
+        employee.setGender(employeeRequestDto.getGender());
+        employee.setAge(employeeRequestDto.getAge());
+        employee.setCompany(company);
         employeeRepository.save(employee);
     }
 
