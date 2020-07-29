@@ -12,4 +12,8 @@ public class CompanyRepository {
     public List<Company> findAll() {
         return new ArrayList<>();
     }
+
+    public Company findCompanyById(int companyId) {
+        return new Company();
+    }
 }

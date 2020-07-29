@@ -17,4 +17,8 @@ public class TddCompanyService {
     public List<Company> findAll() {
         return companyRepository.findAll();
     }
+
+    public Company findCompanyById(int companyId) {
+        return new Company();
+    }
 }
