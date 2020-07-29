@@ -3,10 +3,13 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class EmployeeController {
@@ -14,29 +17,13 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("/employees/{employeeId}")
-    public Employee findEmployeeById(@PathVariable int employeeId) {
+    public Optional<Employee> findEmployeeById(@PathVariable int employeeId) {
         return employeeService.findEmployeeById(employeeId);
     }
 
-    @GetMapping("/employees")
-    public List<Employee> findEmployeesByCondition(@RequestParam(required = false, defaultValue = "-1") int page,
-                                              @RequestParam(required = false, defaultValue = "-1") int pageSize,
-                                              @RequestParam(required = false, defaultValue = "-1") String gender) {
-        if (page != -1) return getPagesEmployees(page, pageSize);
-        if (!"-1".equals(gender)) return getEmployeesWithGender(gender);
-        return employeeService.findAllEmployees();
-    }
-
-    private List<Employee> getPagesEmployees(int page, int pageSize) {
-        List<Employee> employees = employeeService.findAllEmployees();
-        List<Employee> pagedEmployees = new ArrayList<>();
-
-        int startRow = (page - 1) * pageSize;
-        int endRow = startRow + pageSize;
-        for (int index = startRow; index < employees.size() && index < endRow; index++) {
-            pagedEmployees.add(employees.get(index));
-        }
-        return pagedEmployees;
+    @GetMapping(value = "/employees",params = {"page","size"})
+    public Page<Employee> findEmployeesByPage(@PageableDefault Pageable pageable) {
+        return employeeService.getPagedEmployees(pageable);
     }
 
     private List<Employee> getEmployeesWithGender(String gender) {
