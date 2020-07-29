@@ -41,10 +41,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteEmployeeById(int employeeId){
-        Iterator<Employee> employeeIterator = employees.iterator();
-        while(employeeIterator.hasNext()){
-            Employee nextEmployee = employeeIterator.next();
-            if(nextEmployee.getId() == employeeId)employeeIterator.remove();
-        }
+        employeeRepository.deleteById(employeeId);
     }
 }
