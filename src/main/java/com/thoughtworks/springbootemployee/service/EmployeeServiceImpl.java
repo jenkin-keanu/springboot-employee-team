@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -24,12 +25,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee findEmployeeById(int employeeId) {
-        for ( Employee employee: employees) {
-            if (employee.getId() == employeeId)
-                return employee;
-        }
-        return null;
+    public Optional<Employee> findEmployeeById(int employeeId) {
+        return employeeRepository.findById(employeeId);
     }
     @Override
     public void addEmployee(Employee employee) {
