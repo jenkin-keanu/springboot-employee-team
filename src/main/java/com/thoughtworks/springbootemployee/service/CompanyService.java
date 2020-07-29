@@ -19,7 +19,7 @@ public interface CompanyService {
 
     Company updateCompany(int companyId, Company company);
 
-    void deleteCompanyById(int companyId);
+    Company deleteCompanyById(int companyId);
 
     Page<Company> getPagedCompanies(Pageable pageable);
 

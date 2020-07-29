@@ -56,8 +56,12 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void deleteCompanyById(int companyId) {
+    public Company deleteCompanyById(int companyId) {
+        Company company = companyRepository.findById(companyId).get();
+        if (company.equals(null))
+            return null;
         companyRepository.deleteById(companyId);
+        return company;
     }
 
     @Override
