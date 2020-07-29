@@ -8,14 +8,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class EmployeeController {
     @Autowired
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    @GetMapping(value = "/employees")
+    public List<Employee> findAllEmployees() {
+        return employeeService.findAllEmployees();
+    }
 
     @GetMapping("/employees/{employeeId}")
     public Optional<Employee> findEmployeeById(@PathVariable int employeeId) {
@@ -30,17 +39,6 @@ public class EmployeeController {
     @GetMapping(value = "/employees",params = {"gender"})
     public List<Employee> findEmployeesByGender(@RequestParam String gender) {
         return employeeService.findEmployeesByGender(gender);
-    }
-
-    private List<Employee> getEmployeesWithGender(String gender) {
-        List<Employee> employees = employeeService.findAllEmployees();
-        List<Employee> employeesWithGender = new ArrayList<>();
-
-        for (int index = 0; index < employees.size(); index++) {
-            if (employees.get(index).getGender().equals(gender))
-                employeesWithGender.add(employees.get(index));
-        }
-        return employeesWithGender;
     }
 
     @PostMapping("/employees")
