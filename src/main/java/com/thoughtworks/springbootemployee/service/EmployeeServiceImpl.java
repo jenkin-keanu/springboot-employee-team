@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -47,5 +48,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Page<Employee> getPagedEmployees(Pageable pageable) {
         return employeeRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Employee> findEmployeesByGender(String gender) {
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee -> employee.getGender().equals(gender))
+                .collect(Collectors.toList());
     }
 }

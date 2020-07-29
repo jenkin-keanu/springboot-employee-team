@@ -26,6 +26,11 @@ public class EmployeeController {
         return employeeService.getPagedEmployees(pageable);
     }
 
+    @GetMapping(value = "/employees",params = {"gender"})
+    public List<Employee> findEmployeesByGender(@RequestParam String gender) {
+        return employeeService.findEmployeesByGender(gender);
+    }
+
     private List<Employee> getEmployeesWithGender(String gender) {
         List<Employee> employees = employeeService.findAllEmployees();
         List<Employee> employeesWithGender = new ArrayList<>();

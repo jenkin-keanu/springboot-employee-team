@@ -20,4 +20,6 @@ public interface EmployeeService {
     void deleteEmployeeById(int employeeId);
 
     Page<Employee> getPagedEmployees(Pageable pageable);
+
+    List<Employee> findEmployeesByGender(String gender);
 }
