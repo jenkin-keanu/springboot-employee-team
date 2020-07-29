@@ -15,7 +15,7 @@ public class WebExceptionHandler {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(value = UnknownCompanyException.class)
     public void unknownCompany(UnknownCompanyException ex) {
-        log.info("Unknown Company With Id "+ ex.getCompanyId());
+        log.info(ex.getMsg()+"[id == "+ex.getCompanyId() + "]");
     }
 
 }

@@ -44,7 +44,7 @@ public class CompanyController {
     public Optional<Company> findCompanyById(@PathVariable int companyId) {
         if (companyService.findCompanyById(companyId).equals(null))
             return companyService.findCompanyById(companyId);
-        throw new UnknownCompanyException(companyId);
+        throw new UnknownCompanyException(companyId,"Find company by id failed! Not found!");
     }
 
     @PutMapping("/companies/{companyId}")

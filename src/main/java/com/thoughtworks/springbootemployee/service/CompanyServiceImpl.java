@@ -50,7 +50,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company updateCompany(int companyId, Company company) {
-        company.setCompanyId(companyId);
+        if (companyRepository.findById(companyId).equals(null))
+            return null;
         return companyRepository.save(company);
     }
 
