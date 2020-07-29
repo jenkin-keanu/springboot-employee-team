@@ -36,23 +36,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void addEmployee(EmployeeRequestDto employeeRequestDto) {
-        Company company = companyRepository.findById(employeeRequestDto.getCompany_id()).get();
         Employee employee = new Employee();
+        toEmployeeEntity(employeeRequestDto, employee);
+        employeeRepository.save(employee);
+    }
+
+    private void toEmployeeEntity(EmployeeRequestDto employeeRequestDto, Employee employee) {
+        Company company = companyRepository.findById(employeeRequestDto.getCompany_id()).get();
+        employee.setCompany(company);
         employee.setName(employeeRequestDto.getName());
         employee.setGender(employeeRequestDto.getGender());
         employee.setAge(employeeRequestDto.getAge());
-        employee.setCompany(company);
-        employeeRepository.save(employee);
     }
 
     @Override
     public Employee updateEmployee(int employeeId, EmployeeRequestDto employeeRequestDto) {
-        Company company = companyRepository.findById(employeeRequestDto.getCompany_id()).get();
         Employee employee = employeeRepository.findById(employeeId).get();
-        employee.setName(employeeRequestDto.getName());
-        employee.setGender(employeeRequestDto.getGender());
-        employee.setAge(employeeRequestDto.getAge());
-        employee.setCompany(company);
+        toEmployeeEntity(employeeRequestDto, employee);
         return employeeRepository.save(employee);
     }
 
