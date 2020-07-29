@@ -60,6 +60,7 @@ public class CompanyServiceTest {
      */
     @Test
     void should_return_company_1_when_find_company_by_id_given_company_id_1_and_2_companies(){
+
         //given
         List<Company> companies = new ArrayList<>();
         for(int i=0;i<2;i++){
