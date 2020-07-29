@@ -9,14 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private List<Employee> employees = new ArrayList<>();
 
     private final EmployeeRepository employeeRepository;
     private final CompanyRepository companyRepository;
@@ -35,6 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Optional<Employee> findEmployeeById(int employeeId) {
         return employeeRepository.findById(employeeId);
     }
+
     @Override
     public void addEmployee(EmployeeRequestDto employeeRequestDto) {
         Company company = companyRepository.findById(employeeRequestDto.getCompany_id()).get();
@@ -58,9 +57,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployeeById(int employeeId){
+    public void deleteEmployeeById(int employeeId) {
         employeeRepository.deleteById(employeeId);
     }
+
     @Override
     public Page<Employee> getPagedEmployees(Pageable pageable) {
         return employeeRepository.findAll(pageable);

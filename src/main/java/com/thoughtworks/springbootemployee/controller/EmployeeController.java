@@ -31,12 +31,12 @@ public class EmployeeController {
         return employeeService.findEmployeeById(employeeId);
     }
 
-    @GetMapping(value = "/employees",params = {"page","size"})
+    @GetMapping(value = "/employees", params = {"page", "size"})
     public Page<Employee> findEmployeesByPage(@PageableDefault Pageable pageable) {
         return employeeService.getPagedEmployees(pageable);
     }
 
-    @GetMapping(value = "/employees",params = {"gender"})
+    @GetMapping(value = "/employees", params = {"gender"})
     public List<Employee> findEmployeesByGender(@RequestParam String gender) {
         return employeeService.findEmployeesByGender(gender);
     }
@@ -52,7 +52,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/employees/{employeeId}")
-    public void deleteEmployeeById(@PathVariable int employeeId){
+    public void deleteEmployeeById(@PathVariable int employeeId) {
         employeeService.deleteEmployeeById(employeeId);
     }
 }

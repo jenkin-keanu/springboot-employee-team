@@ -3,7 +3,6 @@ package com.thoughtworks.springbootemployee.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,6 +11,7 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int companyId;
+
     private String name;
 
     @JsonIgnore

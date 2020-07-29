@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-    @GetMapping(value = "/companies",params = {"page","size"})
+    @GetMapping(value = "/companies", params = {"page", "size"})
     public Page<Company> findCompaniesByPage(@PageableDefault() Pageable pageable) {
         return companyService.getPagedCompanies(pageable);
     }
@@ -29,11 +30,12 @@ public class CompanyController {
     }
 
     @GetMapping("/companies/{companyId}/employees")
-    public List<Employee> findAllEmployeesInCompany(@PathVariable int companyId){
+    public List<Employee> findAllEmployeesInCompany(@PathVariable int companyId) {
         return companyService.findAllEmployeesInCompany(companyId);
     }
+
     @PostMapping("/companies")
-    public void addCompany(@RequestBody Company company){
+    public void addCompany(@RequestBody Company company) {
         companyService.addCompany(company);
     }
 
@@ -48,7 +50,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/companies/{companyId}")
-    public void deleteEmployeeById(@PathVariable int companyId){
+    public void deleteEmployeeById(@PathVariable int companyId) {
         companyService.deleteCompanyById(companyId);
     }
 }

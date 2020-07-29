@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +58,7 @@ public class CompanyServiceImpl implements CompanyService {
     public void deleteCompanyById(int companyId) {
         companyRepository.deleteById(companyId);
     }
+
     @Override
     public Page<Company> getPagedCompanies(Pageable pageable) {
         return companyRepository.findAll(pageable);
