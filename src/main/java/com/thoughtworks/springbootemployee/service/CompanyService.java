@@ -10,12 +10,17 @@ import java.util.Optional;
 
 public interface CompanyService {
     List<Company> findAllCompanies();
+
     List<Employee> findAllEmployeesInCompany(int companyId);
+
     void addCompany(Company company);
+
     Optional<Company> findCompanyById(int companyId);
+
     Company updateCompany(int companyId, Company company);
 
     void deleteCompanyById(int companyId);
+
     Page<Company> getPagedCompanies(Pageable pageable);
 
 }

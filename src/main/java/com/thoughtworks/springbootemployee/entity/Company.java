@@ -14,8 +14,6 @@ public class Company {
     private int companyId;
     private String name;
 
-
-
     @JsonIgnore
     @OneToMany(mappedBy = "company")
     private List<Employee> employees;
@@ -35,6 +33,7 @@ public class Company {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
+
     public String getName() {
         return name;
     }
