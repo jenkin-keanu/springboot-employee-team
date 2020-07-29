@@ -35,16 +35,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee updateEmployee(int employeeId, Employee employee) {
-        for(Employee emp:employees){
-            if (emp.getId() == employeeId){
-                emp.setAge(employee.getAge());
-                emp.setGender(employee.getGender());
-                emp.setId(employee.getId());
-                emp.setName(employee.getName());
-                return emp;
-            }
-        }
-        return null;
+        employee.setId(employeeId);
+        return employeeRepository.save(employee);
     }
 
     @Override
