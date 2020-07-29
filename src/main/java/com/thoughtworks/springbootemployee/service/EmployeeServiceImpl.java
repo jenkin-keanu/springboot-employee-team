@@ -1,6 +1,9 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.dto.EmployeeRequestDto;
+import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +19,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     private List<Employee> employees = new ArrayList<>();
 
     private final EmployeeRepository employeeRepository;
+    private final CompanyRepository companyRepository;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, CompanyRepository companyRepository) {
         this.employeeRepository = employeeRepository;
+        this.companyRepository = companyRepository;
     }
 
     @Override
@@ -36,8 +41,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(int employeeId, Employee employee) {
-        employee.setId(employeeId);
+    public Employee updateEmployee(int employeeId, EmployeeRequestDto employeeRequestDto) {
+        Company company = companyRepository.findById(employeeRequestDto.getCompany_id()).get();
+        Employee employee = employeeRepository.findById(employeeId).get();
+        employee.setName(employeeRequestDto.getName());
+        employee.setGender(employeeRequestDto.getGender());
+        employee.setAge(employeeRequestDto.getAge());
+        employee.setCompany(company);
         return employeeRepository.save(employee);
     }
 
