@@ -4,29 +4,29 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
-    @GetMapping("/companies")
-    public List<Company> findAllCompanies(){
+    @GetMapping(value = "/companies",params = {"page","size"})
+    public Page<Company> findCompaniesByPage(@PageableDefault() Pageable pageable) {
+        return companyService.getPagedCompanies(pageable);
+    }
+
+    @GetMapping(value = "/companies")
+    public List<Company> findAllCompanies() {
         return companyService.findAllCompanies();
     }
 
-    @GetMapping("/companies")
-    public List<Company> findCompaniesByCondition(@RequestParam(required = false, defaultValue = "-1") int page,
-                                                   @RequestParam(required = false, defaultValue = "-1") int pageSize) {
-        if (page != -1) return getPagedCompanies(page, pageSize);
-        return companyService.findAllCompanies();
-    }
-
-    @GetMapping("/companies/{companyId}")
+    @GetMapping("/companies/{companyId}/employees")
     public List<Employee> findAllEmployeesInCompany(@PathVariable int companyId){
         return companyService.findAllEmployeesInCompany(companyId);
     }
@@ -36,7 +36,7 @@ public class CompanyController {
     }
 
     @GetMapping("/companies/{companyId}")
-    public Company findCompanyById(@PathVariable int companyId) {
+    public Optional<Company> findCompanyById(@PathVariable int companyId) {
         return companyService.findCompanyById(companyId);
     }
 
@@ -48,17 +48,5 @@ public class CompanyController {
     @DeleteMapping("/companies/{companyId}")
     public void deleteEmployeeById(@PathVariable int companyId){
         companyService.deleteCompanyById(companyId);
-    }
-
-    private List<Company> getPagedCompanies(int page, int pageSize) {
-        List<Company> companies = companyService.findAllCompanies();
-        List<Company> pagedCompanies = new ArrayList<>();
-
-        int startRow = (page - 1) * pageSize;
-        int endRow = startRow + pageSize;
-        for (int index = startRow; index < companies.size() && index < endRow; index++) {
-            pagedCompanies.add(companies.get(index));
-        }
-        return pagedCompanies;
     }
 }

@@ -18,7 +18,4 @@ public class TddCompanyService {
         return companyRepository.findAll();
     }
 
-    public Company findCompanyById(int companyId) {
-        return companyRepository.findCompanyById(companyId);
-    }
 }

@@ -2,60 +2,65 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class CompanyServiceImpl implements CompanyService{
+public class CompanyServiceImpl implements CompanyService {
 
-    private List<Company> companies = new ArrayList<>();
+    private final CompanyRepository companyRepository;
+
+    @Autowired
+    public CompanyServiceImpl(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
 
     @Override
     public List<Company> findAllCompanies() {
-        return companies;
-    }
-    @Override
-    public List<Employee> findAllEmployeesInCompany(int companyId) {
-        for (Company company:companies ) {
-            if (company.getCompanyId() == companyId)
-                return company.getEmployees();
-        }
-        return null;
-    }
-    @Override
-    public void addCompany(Company company) {
-        companies.add(company);
+        return companyRepository.findAll();
     }
 
     @Override
-    public Company findCompanyById(int companyId) {
-        for ( Company company: companies) {
-            if (company.getCompanyId() == companyId)
-                return company;
-        }
-        return null;
+    public List<Employee> findAllEmployeesInCompany(int companyId) {
+        Company company = companyRepository
+                .findAll()
+                .stream()
+                .filter(e -> e.getCompanyId() == companyId)
+                .findFirst()
+                .orElse(null);
+
+        return company == null ? null : company.getEmployees();
+    }
+
+    @Override
+    public void addCompany(Company company) {
+        companyRepository.save(company);
+    }
+
+    @Override
+    public Optional<Company> findCompanyById(int companyId) {
+        return companyRepository.findById(companyId);
     }
 
     @Override
     public Company updateCompany(int companyId, Company company) {
-        for(Company item:companies){
-            if (item.getCompanyId() == companyId){
-                item.setCompanyId(company.getCompanyId());
-                item.setEmployees(company.getEmployees());
-                return item;
-            }
-        }
-        return null;
+        company.setCompanyId(companyId);
+        return companyRepository.save(company);
+    }
+
+    @Override
+    public void deleteCompanyById(int companyId) {
+        companyRepository.deleteById(companyId);
     }
     @Override
-    public void deleteCompanyById(int companyId){
-        Iterator<Company> companyIterator = companies.iterator();
-        while(companyIterator.hasNext()){
-            Company nextCompany = companyIterator.next();
-            if(nextCompany.getCompanyId() == companyId)nextCompany.setEmployees(null);
-        }
+    public Page<Company> getPagedCompanies(Pageable pageable) {
+        return companyRepository.findAll(pageable);
     }
 
 }
