@@ -43,19 +43,22 @@ public class CompanyController {
     @GetMapping("/companies/{companyId}")
     public Optional<Company> findCompanyById(@PathVariable int companyId) {
         if (companyService.findCompanyById(companyId).equals(null))
-            return companyService.findCompanyById(companyId);
-        throw new UnknownCompanyException(companyId,"Find company by id failed! Not found!");
+            throw new UnknownCompanyException(companyId,"Find company by id failed! Not found!");
+        return companyService.findCompanyById(companyId);
+
     }
 
     @PutMapping("/companies/{companyId}")
     public Company updateEmployee(@PathVariable int companyId, @RequestBody Company company) {
-        if (companyService.updateCompany(companyId, company).equals(null))
+        if (companyService.findCompanyById(companyId).equals(null))
             throw new UnknownCompanyException(companyId,"Update company by id failed! Not found!");
         return companyService.updateCompany(companyId, company);
     }
 
     @DeleteMapping("/companies/{companyId}")
     public void deleteEmployeeById(@PathVariable int companyId) {
+        if(companyService.findCompanyById(companyId).equals(null))
+            throw new UnknownCompanyException(companyId,"Delete company by id failed! Not found!");
         companyService.deleteCompanyById(companyId);
     }
 }
