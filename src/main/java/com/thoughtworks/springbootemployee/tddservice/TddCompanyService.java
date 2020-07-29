@@ -19,6 +19,6 @@ public class TddCompanyService {
     }
 
     public Company findCompanyById(int companyId) {
-        return new Company();
+        return companyRepository.findCompanyById(companyId);
     }
 }
