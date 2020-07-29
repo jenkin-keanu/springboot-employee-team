@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.UnknownCompanyException;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +42,9 @@ public class CompanyController {
 
     @GetMapping("/companies/{companyId}")
     public Optional<Company> findCompanyById(@PathVariable int companyId) {
-        return companyService.findCompanyById(companyId);
+        if (companyService.findCompanyById(companyId).equals(null))
+            return companyService.findCompanyById(companyId);
+        throw new UnknownCompanyException(companyId);
     }
 
     @PutMapping("/companies/{companyId}")
