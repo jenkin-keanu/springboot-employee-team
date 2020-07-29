@@ -49,6 +49,8 @@ public class CompanyController {
 
     @PutMapping("/companies/{companyId}")
     public Company updateEmployee(@PathVariable int companyId, @RequestBody Company company) {
+        if (companyService.updateCompany(companyId, company).equals(null))
+            throw new UnknownCompanyException(companyId,"Update company by id failed! Not found!");
         return companyService.updateCompany(companyId, company);
     }
 
