@@ -30,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
     @Override
     public void addEmployee(Employee employee) {
-        employees.add(employee);
+        employeeRepository.save(employee);
     }
 
     @Override
