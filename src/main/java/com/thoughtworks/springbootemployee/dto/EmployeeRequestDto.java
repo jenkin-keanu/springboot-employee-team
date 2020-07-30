@@ -1,8 +1,10 @@
 package com.thoughtworks.springbootemployee.dto;
 
+//TODO
 import com.thoughtworks.springbootemployee.entity.Company;
 
 public class EmployeeRequestDto {
+    //TODO
     private Integer id;
 
     private Integer age;

@@ -40,6 +40,7 @@ public class CompanyController {
         companyService.addCompany(company);
     }
 
+    //TODO
     @GetMapping("/companies/{companyId}")
     public Optional<Company> findCompanyById(@PathVariable int companyId) {
         if (!companyService.findCompanyById(companyId).isPresent())
