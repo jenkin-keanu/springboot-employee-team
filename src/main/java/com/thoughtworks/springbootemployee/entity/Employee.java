@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table
@@ -13,9 +14,20 @@ public class Employee {
 
     private int age;
 
+    @NotBlank
     private String name;
 
     private String gender;
+
+    public Employee(int age, String name, String gender, Company company) {
+        this.age = age;
+        this.name = name;
+        this.gender = gender;
+        this.company = company;
+    }
+
+    public Employee() {
+    }
 
     @JsonIgnore
     @ManyToOne

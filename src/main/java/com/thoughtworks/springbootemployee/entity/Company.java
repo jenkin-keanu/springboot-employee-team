@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -12,6 +13,7 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int companyId;
 
+    @NotBlank
     private String name;
 
     @JsonIgnore
