@@ -121,4 +121,9 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("content[1].name").value("jenkin4"))
                 .andExpect(jsonPath("content[2].name").value("jenkin5"));
     }
+
+    @Test
+    void should_return_not_found_when_find_a_not_exist_company_given_a_company_id() throws Exception {
+        mockMvc.perform(get("/companies/1")).andExpect(status().isNotFound());
+    }
 }
