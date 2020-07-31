@@ -126,4 +126,9 @@ public class CompanyIntegrationTest {
     void should_return_not_found_when_find_a_not_exist_company_given_a_company_id() throws Exception {
         mockMvc.perform(get("/companies/1")).andExpect(status().isNotFound());
     }
+
+    @Test
+    void should_return_not_found_when_delete_a_not_exist_company_given_a_company_id() throws Exception {
+        mockMvc.perform(delete("/companies/1")).andExpect(status().isNotFound());
+    }
 }
