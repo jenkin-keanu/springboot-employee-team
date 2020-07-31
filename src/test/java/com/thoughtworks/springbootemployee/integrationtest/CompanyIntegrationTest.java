@@ -11,12 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.JsonPath;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +49,7 @@ public class CompanyIntegrationTest {
         company.setName("jenkin");
         Company savedCompany=companyRepository.save(company);
         mockMvc.perform(MockMvcRequestBuilders.
-                get("/companies/"+savedCompany.getCompanyId())).
+                get("/companies/"+savedCompany.getId())).
                 andExpect(status().isOk()).andExpect(jsonPath("name").value("jenkin"));
     }
 
@@ -74,7 +72,7 @@ public class CompanyIntegrationTest {
         String companyJson = "{\n" +
                 "\t\"name\":\"keanu\"\n" +
                 "}";
-        mockMvc.perform(put("/companies/"+savedCompany.getCompanyId()).
+        mockMvc.perform(put("/companies/"+savedCompany.getId()).
                 contentType(MediaType.APPLICATION_JSON).
                 content(companyJson)).
                 andExpect(status().isOk()).andExpect(jsonPath("name").value("keanu"));
@@ -86,8 +84,8 @@ public class CompanyIntegrationTest {
         company.setName("jenkin");
         Company savedCompany=companyRepository.save(company);
 
-        mockMvc.perform(delete("/companies/"+savedCompany.getCompanyId())).andExpect(status().isOk());
-        Optional<Company> companyQuery=companyRepository.findById(savedCompany.getCompanyId());
+        mockMvc.perform(delete("/companies/"+savedCompany.getId())).andExpect(status().isOk());
+        Optional<Company> companyQuery=companyRepository.findById(savedCompany.getId());
         Assertions.assertFalse(companyQuery.isPresent());
     }
 

@@ -8,6 +8,6 @@ CREATE TABLE employee (
   company_id INT Not NULL
 );
  CREATE TABLE company (
-   company_id INT AUTO_INCREMENT  PRIMARY KEY,
+   id INT AUTO_INCREMENT  PRIMARY KEY,
    name VARCHAR(100) NOT NULL
  );

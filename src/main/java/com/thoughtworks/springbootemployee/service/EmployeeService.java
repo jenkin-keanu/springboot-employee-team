@@ -13,7 +13,7 @@ public interface EmployeeService {
 
     Optional<Employee> findEmployeeById(int employeeId);
 
-    void addEmployee(EmployeeRequestDto employeeRequestDto);
+    Employee addEmployee(EmployeeRequestDto employeeRequestDto);
 
     Employee updateEmployee(int employeeId, EmployeeRequestDto employeeRequestDto);
 

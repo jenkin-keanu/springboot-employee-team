@@ -1,18 +1,19 @@
 package com.thoughtworks.springbootemployee.dto;
 
 //TODO
-import com.thoughtworks.springbootemployee.entity.Company;
 
 public class EmployeeRequestDto {
-    //TODO
-    private Integer id;
 
-    public EmployeeRequestDto(Integer age, String name, String gender, Integer company_id) {
+    public EmployeeRequestDto(String name, Integer age, String gender, Integer companyId) {
         this.age = age;
         this.name = name;
         this.gender = gender;
-        this.company_id = company_id;
+        this.companyId = companyId;
     }
+    public EmployeeRequestDto(){
+
+    }
+    private Integer id;
 
     private Integer age;
 
@@ -20,7 +21,7 @@ public class EmployeeRequestDto {
 
     private String gender;
 
-    private Integer company_id;
+    private Integer companyId;
 
     public Integer getId() {
         return id;
@@ -54,12 +55,12 @@ public class EmployeeRequestDto {
         this.gender = gender;
     }
 
-    public Integer getCompany_id() {
-        return company_id;
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public void setCompany_id(Integer company_id) {
-        this.company_id = company_id;
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 }
 

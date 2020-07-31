@@ -17,7 +17,7 @@ public class Company {
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int companyId;
+    private int id;
 
     private String name;
 
@@ -25,12 +25,12 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<Employee> employees;
 
-    public int getCompanyId() {
-        return companyId;
+    public int getId() {
+        return id;
     }
 
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<Employee> getEmployees() {
@@ -54,12 +54,12 @@ public class Company {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Company company = (Company) o;
-        return companyId == company.companyId &&
+        return id == company.id &&
                 Objects.equals(name, company.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(companyId, name);
+        return Objects.hash(id, name);
     }
 }

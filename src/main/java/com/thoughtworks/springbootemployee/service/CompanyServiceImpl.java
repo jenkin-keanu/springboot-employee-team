@@ -31,7 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = companyRepository
                 .findAll()
                 .stream()
-                .filter(e -> e.getCompanyId() == companyId)
+                .filter(e -> e.getId() == companyId)
                 .findFirst()
                 .orElse(null);
 
@@ -50,7 +50,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company updateCompany(int companyId, Company company) {
-        company.setCompanyId(companyId);
+        company.setId(companyId);
         return companyRepository.save(company);
     }
 
