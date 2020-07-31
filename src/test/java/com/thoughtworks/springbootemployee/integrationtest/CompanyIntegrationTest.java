@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,5 +101,24 @@ public class CompanyIntegrationTest {
         mockMvc.perform(get("/companies")).andExpect(status().isOk());
         List<Company> companies=companyRepository.findAll();
         Assertions.assertEquals(6,companies.size());
+    }
+
+    @Test
+    void should_return_paged_companies_when_find_companies_by_page_given_page_and_size() throws Exception {
+        for(int i=0;i<6;i++){
+            Company company = new Company();
+            company.setName("jenkin"+i);
+            companyRepository.save(company);
+        }
+        int page = 1;
+        int size = 3;
+        mockMvc.perform(get("/companies")
+                .param("page", String.valueOf(page))
+                .param("size", String.valueOf(size)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content.length()").value(3))
+                .andExpect(jsonPath("content[0].name").value("jenkin3"))
+                .andExpect(jsonPath("content[1].name").value("jenkin4"))
+                .andExpect(jsonPath("content[2].name").value("jenkin5"));
     }
 }
