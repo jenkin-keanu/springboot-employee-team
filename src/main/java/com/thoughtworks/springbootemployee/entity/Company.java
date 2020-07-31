@@ -9,6 +9,12 @@ import java.util.Objects;
 @Entity
 @Table
 public class Company {
+    public Company(String name){
+        this.name = name;
+    }
+    public Company(){
+
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int companyId;
