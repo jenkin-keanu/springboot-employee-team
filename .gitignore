@@ -32,3 +32,4 @@ build/
 
 ### gradle ###
 .gradle
+/gradle/wrapper/gradle-6.5.1-bin.zip
