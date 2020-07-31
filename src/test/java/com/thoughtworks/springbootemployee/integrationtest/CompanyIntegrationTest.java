@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -61,5 +62,20 @@ public class CompanyIntegrationTest {
         mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(companyJson)).andExpect(status().isCreated());
         List<Company> companies=companyRepository.findByName("cargoSmart");
         Assertions.assertEquals(1,companies.size());
+    }
+
+    @Test
+    void should_return_a_new_company_when_update_company_given_a_company() throws Exception {
+        Company company = new Company();
+        company.setName("jenkin");
+        Company savedCompany=companyRepository.save(company);
+
+        String companyJson = "{\n" +
+                "\t\"name\":\"keanu\"\n" +
+                "}";
+        mockMvc.perform(put("/companies/"+savedCompany.getCompanyId()).
+                contentType(MediaType.APPLICATION_JSON).
+                content(companyJson)).
+                andExpect(status().isOk()).andExpect(jsonPath("name").value("keanu"));
     }
 }
