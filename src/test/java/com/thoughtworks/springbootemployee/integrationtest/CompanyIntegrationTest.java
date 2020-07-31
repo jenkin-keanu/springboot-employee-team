@@ -131,4 +131,15 @@ public class CompanyIntegrationTest {
     void should_return_not_found_when_delete_a_not_exist_company_given_a_company_id() throws Exception {
         mockMvc.perform(delete("/companies/1")).andExpect(status().isNotFound());
     }
+
+    @Test
+    void should_return_not_found_when_update_a_not_exist_company_given_a_company_id() throws Exception {
+        String companyJson = "{\n" +
+                "\t\"name\":\"keanu\"\n" +
+                "}";
+        mockMvc.perform(put("/companies/1").
+                contentType(MediaType.APPLICATION_JSON).
+                content(companyJson)).
+                andExpect(status().isNotFound());
+    }
 }
