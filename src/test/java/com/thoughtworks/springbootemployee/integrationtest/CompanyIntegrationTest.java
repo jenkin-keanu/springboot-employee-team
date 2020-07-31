@@ -89,4 +89,16 @@ public class CompanyIntegrationTest {
         Optional<Company> companyQuery=companyRepository.findById(savedCompany.getCompanyId());
         Assertions.assertFalse(companyQuery.isPresent());
     }
+
+    @Test
+    void should_return_6_companies_when_find_all_companies_given_6_companies() throws Exception {
+        for(int i=0;i<6;i++){
+            Company company = new Company();
+            company.setName("jenkin"+i);
+            companyRepository.save(company);
+        }
+        mockMvc.perform(get("/companies")).andExpect(status().isOk());
+        List<Company> companies=companyRepository.findAll();
+        Assertions.assertEquals(6,companies.size());
+    }
 }
