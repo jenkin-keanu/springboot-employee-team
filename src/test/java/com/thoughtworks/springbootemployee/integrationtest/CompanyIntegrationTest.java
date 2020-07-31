@@ -17,9 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -77,5 +77,16 @@ public class CompanyIntegrationTest {
                 contentType(MediaType.APPLICATION_JSON).
                 content(companyJson)).
                 andExpect(status().isOk()).andExpect(jsonPath("name").value("keanu"));
+    }
+
+    @Test
+    void should_return_null_when_delete_company_given_an_id() throws Exception {
+        Company company = new Company();
+        company.setName("jenkin");
+        Company savedCompany=companyRepository.save(company);
+
+        mockMvc.perform(delete("/companies/"+savedCompany.getCompanyId())).andExpect(status().isOk());
+        Optional<Company> companyQuery=companyRepository.findById(savedCompany.getCompanyId());
+        Assertions.assertFalse(companyQuery.isPresent());
     }
 }
