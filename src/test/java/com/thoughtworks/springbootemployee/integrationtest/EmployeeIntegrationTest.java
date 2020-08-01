@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -73,4 +74,26 @@ public class EmployeeIntegrationTest {
                 .andExpect(status().isOk());
         Assertions.assertEquals(1,employeeRepository.findAll().size());
     }
+
+
+    @Test
+    void should_return_a_new_company_when_update_company_given_a_company() throws Exception {
+        Company company = new Company();
+        company.setName("jenkin");
+        Company savedCompany=companyRepository.save(company);
+        Employee employee=new Employee(1,"hhh","mele",savedCompany);
+        Employee savedEmployee=employeeRepository.save(employee);
+
+        String employeeJson="{\n" +
+                "        \"name\": \"Jenkin\",\n" +
+                "        \"age\": 14,\n" +
+                "        \"gender\": \"male\",\n" +
+                "        \"companyId\": "+company.getId()+"\n" +
+                "}";
+        mockMvc.perform(put("/employees/"+savedEmployee.getId()).
+                contentType(MediaType.APPLICATION_JSON).
+                content(employeeJson)).
+                andExpect(status().isOk()).andExpect(jsonPath("name").value("Jenkin"));
+    }
+
 }
