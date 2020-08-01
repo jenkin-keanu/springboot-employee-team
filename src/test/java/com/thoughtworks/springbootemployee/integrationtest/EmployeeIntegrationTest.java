@@ -160,4 +160,18 @@ public class EmployeeIntegrationTest {
     void should_return_not_found_when_delete_a_not_exist_employee_given_an_employee_id() throws Exception {
         mockMvc.perform(delete("/employees/1")).andExpect(status().isNotFound());
     }
+
+    @Test
+    void should_return_not_found_when_update_a_not_exist_employee_given_a_employee_id() throws Exception {
+        String employeeJson="{\n" +
+                "        \"name\": \"Jenkin\",\n" +
+                "        \"age\": 14,\n" +
+                "        \"gender\": \"male\",\n" +
+                "        \"companyId\": "+1+"\n" +
+                "}";
+        mockMvc.perform(put("/employees/1").
+                contentType(MediaType.APPLICATION_JSON).
+                content(employeeJson)).
+                andExpect(status().isNotFound());
+    }
 }
