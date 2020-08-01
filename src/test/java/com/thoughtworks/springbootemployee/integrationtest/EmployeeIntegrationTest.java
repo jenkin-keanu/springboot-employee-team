@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -109,5 +110,19 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(delete("/employees/"+savedEmployee.getId())).andExpect(status().isOk());
         Optional<Employee> employeeQuery=employeeRepository.findById(savedEmployee.getId());
         Assertions.assertFalse(employeeQuery.isPresent());
+    }
+
+    @Test
+    void should_return_8_employees_when_find_all_employees_given_8_employees() throws Exception {
+        Company company = new Company();
+        company.setName("Keanu");
+        Company savedCompany=companyRepository.save(company);
+        for(int i=0;i<8;i++){
+            Employee employee = new Employee(23+i,"jenkin"+i,"male",savedCompany);
+            employeeRepository.save(employee);
+        }
+        mockMvc.perform(get("/employees"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(8));
     }
 }
