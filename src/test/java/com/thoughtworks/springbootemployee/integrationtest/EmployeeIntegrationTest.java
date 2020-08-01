@@ -2,24 +2,26 @@ package com.thoughtworks.springbootemployee.integrationtest;
 
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.UnknownEmployeeException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.util.NestedServletException;
 
-import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,6 +40,9 @@ public class EmployeeIntegrationTest {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @BeforeEach
     void prepareData(){
@@ -144,5 +149,10 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.content.length()").value(2))
                 .andExpect(jsonPath("content[0].name").value("jenkin6"))
                 .andExpect(jsonPath("content[1].name").value("jenkin7"));
+    }
+
+    @Test()
+    void should_return_not_found_when_find_a_not_exist_employee_given_an_employee_id() throws Exception {
+        mockMvc.perform(get("/employees/1")).andExpect(status().isNotFound());
     }
 }
