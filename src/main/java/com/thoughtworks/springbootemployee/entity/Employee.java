@@ -7,16 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table
 public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    private int age;
-
-    private String name;
-
-    private String gender;
-
     public Employee(int age, String name, String gender, Company company) {
         this.age = age;
         this.name = name;
@@ -26,6 +16,16 @@ public class Employee {
 
     public Employee() {
     }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private int age;
+
+    private String name;
+
+    private String gender;
 
     @JsonIgnore
     @ManyToOne
