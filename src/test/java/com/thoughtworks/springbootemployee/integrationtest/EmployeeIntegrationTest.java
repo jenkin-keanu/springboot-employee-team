@@ -155,4 +155,9 @@ public class EmployeeIntegrationTest {
     void should_return_not_found_when_find_a_not_exist_employee_given_an_employee_id() throws Exception {
         mockMvc.perform(get("/employees/1")).andExpect(status().isNotFound());
     }
+
+    @Test
+    void should_return_not_found_when_delete_a_not_exist_employee_given_an_employee_id() throws Exception {
+        mockMvc.perform(delete("/employees/1")).andExpect(status().isNotFound());
+    }
 }
