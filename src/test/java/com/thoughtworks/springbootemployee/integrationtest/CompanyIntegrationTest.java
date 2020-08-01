@@ -2,7 +2,9 @@ package com.thoughtworks.springbootemployee.integrationtest;
 
 
 import com.thoughtworks.springbootemployee.entity.Company;
+import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -29,6 +31,9 @@ public class CompanyIntegrationTest {
     private MockMvc mockMvc;
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private CompanyService companyService;
@@ -139,5 +144,18 @@ public class CompanyIntegrationTest {
                 contentType(MediaType.APPLICATION_JSON).
                 content(companyJson)).
                 andExpect(status().isNotFound());
+    }
+
+    @Test
+    void should_return_6_employees_when_find_all_employees_in_a_company_given_a_company_with_6_employees() throws Exception {
+        Company company = new Company();
+        company.setName("Keanu");
+        Company savedCompany=companyRepository.save(company);
+        for(int i=0;i<6;i++){
+            Employee employee = new Employee(23+i,"jenkin"+i,"male",savedCompany);
+            employeeRepository.save(employee);
+        }
+        mockMvc.perform(get("/companies/"+savedCompany.getId()+"/employees"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.length()").value(6));
     }
 }
