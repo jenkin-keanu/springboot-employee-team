@@ -46,8 +46,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    public void addEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
-        employeeService.addEmployee(employeeRequestDto);
+    public Employee addEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
+        return employeeService.addEmployee(employeeRequestDto);
     }
 
     @PutMapping("/employees/{employeeId}")
