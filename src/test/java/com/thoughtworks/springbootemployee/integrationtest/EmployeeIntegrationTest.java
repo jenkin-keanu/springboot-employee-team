@@ -71,8 +71,9 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(post("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(employeeJson))
-                .andExpect(status().isOk());
-        Assertions.assertEquals(1,employeeRepository.findAll().size());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value("Jenkin"))
+                .andExpect(jsonPath("age").value(14));
     }
 
 
