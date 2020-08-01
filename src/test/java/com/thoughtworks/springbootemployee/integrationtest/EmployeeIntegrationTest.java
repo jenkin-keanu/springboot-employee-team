@@ -16,9 +16,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -97,4 +98,16 @@ public class EmployeeIntegrationTest {
                 andExpect(status().isOk()).andExpect(jsonPath("name").value("Jenkin"));
     }
 
+    @Test
+    void should_return_null_when_delete_employee_given_an_id() throws Exception {
+        Company company = new Company();
+        company.setName("jenkin");
+        Company savedCompany=companyRepository.save(company);
+        Employee employee=new Employee(88,"Keanu","male",savedCompany);
+        Employee savedEmployee=employeeRepository.save(employee);
+
+        mockMvc.perform(delete("/employees/"+savedEmployee.getId())).andExpect(status().isOk());
+        Optional<Employee> employeeQuery=employeeRepository.findById(savedEmployee.getId());
+        Assertions.assertFalse(employeeQuery.isPresent());
+    }
 }
