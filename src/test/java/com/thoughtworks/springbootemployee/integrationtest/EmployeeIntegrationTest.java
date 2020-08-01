@@ -125,4 +125,24 @@ public class EmployeeIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(8));
     }
+
+    @Test
+    void should_return_paged_employees_when_find_employees_by_page_given_page_and_size() throws Exception {
+        Company company = new Company();
+        company.setName("Keanu");
+        Company savedCompany=companyRepository.save(company);
+        for(int i=0;i<8;i++){
+            Employee employee = new Employee(23+i,"jenkin"+i,"male",savedCompany);
+            employeeRepository.save(employee);
+        }
+        int page = 2;
+        int size = 3;
+        mockMvc.perform(get("/employees")
+                .param("page", String.valueOf(page))
+                .param("size", String.valueOf(size)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content.length()").value(2))
+                .andExpect(jsonPath("content[0].name").value("jenkin6"))
+                .andExpect(jsonPath("content[1].name").value("jenkin7"));
+    }
 }
